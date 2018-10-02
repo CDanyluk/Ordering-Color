@@ -194,5 +194,11 @@ namespace WindowsFormsApp1
             SelNaiveMid.Text = "Naive (UVY)";
             SelNaiveLast.Text = "Naive (YVU)";
         }
+
+        private void SelNeighbor_CheckedChanged(object sender, EventArgs e)
+        {
+            RGBGraph rgbgraph = new RGBGraph(co.getColors());
+            rgbgraph.CreatePointList();
+        }
     }
 }

@@ -369,47 +369,47 @@ namespace OrderColors
             return Tuple.Create(Y, U, V);
         }
 
-        public void quickSort(RGBGraph graph, int left, int right)
-        {
-            //notes
-            int i = left;
-            int j = right;
+        //public void quickSort(RGBGraph graph, int left, int right)
+        //{
+        //    //notes
+        //    int i = left;
+        //    int j = right;
 
-            //Get pivot in the middle
-            RGBPoint pivot = graph.Get((left + right) / 2);
+        //    //Get pivot in the middle
+        //    Point pivot = graph.Get((left + right) / 2);
 
-            while (i <= j)
-            {
-                while (graph.Get(i).R < pivot.R)
-                {
-                    i++;
-                }
+        //    while (i <= j)
+        //    {
+        //        while (graph.Get(i).R < pivot.R)
+        //        {
+        //            i++;
+        //        }
 
-                while (graph.Get(i).R > pivot.R)
-                {
-                    j--;
-                }
+        //        while (graph.Get(i).R > pivot.R)
+        //        {
+        //            j--;
+        //        }
 
-                if (i <= j)
-                {
-                    //Swap
-                    graph.Swap(i, j);
+        //        if (i <= j)
+        //        {
+        //            //Swap
+        //            graph.Swap(i, j);
 
-                    i++;
-                    j--;
-                }
-            }
+        //            i++;
+        //            j--;
+        //        }
+        //    }
 
-            //Recursive call
-            if (left < j)
-            {
-                quickSort(graph, left, j);
-            }
+        //    //Recursive call
+        //    if (left < j)
+        //    {
+        //        quickSort(graph, left, j);
+        //    }
 
-            if (i < right)
-            {
-                quickSort(graph, i, right);
-            }
-        }
+        //    if (i < right)
+        //    {
+        //        quickSort(graph, i, right);
+        //    }
+        //}
     }
 }
