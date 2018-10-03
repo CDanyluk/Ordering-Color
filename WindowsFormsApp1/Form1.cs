@@ -198,7 +198,9 @@ namespace WindowsFormsApp1
         private void SelNeighbor_CheckedChanged(object sender, EventArgs e)
         {
             RGBGraph rgbgraph = new RGBGraph(co.getColors());
-            rgbgraph.CreatePointList();
+            rgbgraph.NearestNeighbor();
+            List<Color> myColors = rgbgraph.colorlist;
+            ViewColorList(myColors);
         }
     }
 }
