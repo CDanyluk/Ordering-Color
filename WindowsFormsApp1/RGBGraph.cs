@@ -17,13 +17,103 @@ namespace OrderColors
             this.colorlist = myColors;
         }
 
-        public void NearestNeighbor()
+        public void ShortestPath()
         {
             //Create a list of all the points based off of the colors in colorlist
             List<Point> pointlist = CreatePointList();
 
-            //Find the next closest point to the first point in the pointlist
-            Point curpoint = pointlist[0];
+            //Create a dictionary to keep track of the colorlists distances
+            Dictionary<double, List<Color>> colorDistances = new Dictionary<double, List<Color>>();
+
+            //Go through the pointlist calling nearest neighbor in each point
+            for (int i = 0; i < pointlist.Count; i ++)
+            {
+                //Call nearest neighbor on point
+                Tuple<double, List<Color>> returnedDistance = NearestNeighbors(pointlist[i], pointlist);
+
+                //compare the colorlist to the old colorlist
+                Console.WriteLine("line 35" + ChangedColorList(returnedDistance.Item2, colorlist));
+
+                //Keep track of the total distance related to color list
+                colorDistances[returnedDistance.Item1] = returnedDistance.Item2;
+            }
+
+            //Find the colorlist with the shortest distance
+            double minimumKey = colorDistances.Keys.Min();
+            colorlist = colorDistances[minimumKey];
+
+        }
+
+        public bool ChangedPoint(Color c)
+        {
+            //convert color to point
+            double x = c.R;
+            double y = c.G;
+            double z = c.B;
+            string color = x + "," + y + "," + z;
+            Console.WriteLine("RGB: " + color);
+            Point p = new Point(x, y, z, Double.MaxValue);
+            //convert point to color
+            double R = p.x;
+            double G = p.y;
+            double B = p.z;
+            string point = R + "," + G + "," + B;
+            Color tempcolor = Color.FromArgb(255, (byte)(R * 255.0), (byte)(G * 255.0), (byte)(B * 255.0));
+            Console.WriteLine("point = " + point);
+            return c == tempcolor;
+
+        }
+
+        public bool ChangedColorList(List<Color> colorlist1, List<Color> colorlist2)
+        {
+            for (int i = 0; i < colorlist1.Count; i++)
+            {
+                if (colorlist2.Contains(colorlist1[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool ChangedPointList(List<Point> pointlist1, List<Point> pointlist2)
+        {
+            for (int i = 0; i < pointlist1.Count; i++)
+            {
+                //set temp to be false
+                bool temp = false;
+                for (int j = 0; j < pointlist2.Count; j++)
+                {
+                    double x1 = pointlist1[i].x;
+                    double y1 = pointlist1[i].y;
+                    double z1 = pointlist1[i].z;
+
+                    double x2 = pointlist2[j].x;
+                    double y2 = pointlist2[j].y;
+                    double z2 = pointlist2[j].z;
+
+                    //only if it finds the points are equal will it let temp be true
+                    if ((x1 == x2) && (y1 == y2) && (z1 == z2))
+                    {
+                        temp = true;
+                    }
+                }
+                //if it doesn't find a match at the end of the for loop
+                //then return false
+                if (temp == false)
+                {
+                    return false;
+                }
+
+            }
+            //otherwise absolutely return true
+            return true;
+        }
+
+        public Tuple<double, List<Color>> NearestNeighbors(Point p, List<Point> pointlist)
+        {
+            //Set the current point to the given point
+            Point curpoint = p;
 
             //chosenlist is a list of points that already have found the closest neighbor
             //it is a list of the points in order of closest to furthest
@@ -41,17 +131,17 @@ namespace OrderColors
                 curpoint = closest;
             }
 
-
-            //print the list to check
-            //print the new sorted list to check
-            //foreach (Point e in chosenlist)
-            //{
-            //    Console.WriteLine(e.distance);
-            //}
+            //compare the chosenlist to the old pointlist
+            Console.WriteLine("line 113" + ChangedPointList(pointlist, chosenlist));
 
             //Turn the list of points back into a list of colors
-            CreateColorList(chosenlist);
+            List<Color> newColorList = CreateColorList(chosenlist);
 
+            //compare the colorlists
+            Console.WriteLine("line 141" + ChangedColorList(colorlist, newColorList));
+
+            //Return both the colorlist and it's corresponding total distance
+            return Tuple.Create(totalDistance, newColorList);
 
         }
 
@@ -70,7 +160,7 @@ namespace OrderColors
             return pointlist;
         }
 
-        public void CreateColorList(List<Point> pointlist)
+        public List<Color> CreateColorList(List<Point> pointlist)
         {
             List<Color> tempcolorlist = new List<Color>();
             for (int i = 0; i < pointlist.Count; i++)
@@ -78,15 +168,17 @@ namespace OrderColors
                 double R = pointlist[i].x;
                 double G = pointlist[i].y;
                 double B = pointlist[i].z;
-                Color tempcolor = Color.FromArgb(255, (byte)(R * 255.0), (byte)(G * 255.0), (byte)(B * 255.0));
-                Console.WriteLine("tempcolor = " + tempcolor.R + "," + tempcolor.G + "," + tempcolor.B);
+                //Console.WriteLine("RGB : " + R + "," + G + "," + B);
+                Color tempcolor = Color.FromArgb(255, Convert.ToInt32(R), Convert.ToInt32(G), Convert.ToInt32(B));
+                //Console.WriteLine("tempcolor = " + tempcolor.R + "," + tempcolor.G + "," + tempcolor.B);
                 tempcolorlist.Add(tempcolor);
             }
             foreach (Color c in tempcolorlist)
             {
-                Console.WriteLine(c.R + "," + c.G + "," + c.B);
+                //Console.WriteLine(c.R + "," + c.G + "," + c.B);
             }
-            colorlist = tempcolorlist;
+
+            return tempcolorlist;
 
         }
 
