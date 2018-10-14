@@ -35,43 +35,45 @@
             this.SelRGB = new System.Windows.Forms.RadioButton();
             this.SelHSV = new System.Windows.Forms.RadioButton();
             this.SelYUV = new System.Windows.Forms.RadioButton();
-            this.SelNaiveFirst = new System.Windows.Forms.RadioButton();
-            this.SelNaiveMid = new System.Windows.Forms.RadioButton();
-            this.SelNaiveLast = new System.Windows.Forms.RadioButton();
-            this.SelLum = new System.Windows.Forms.RadioButton();
-            this.SelNeighbor = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SelNeighbor = new System.Windows.Forms.RadioButton();
+            this.SelLum = new System.Windows.Forms.RadioButton();
+            this.SelNaiveFirst = new System.Windows.Forms.RadioButton();
+            this.SelNaiveLast = new System.Windows.Forms.RadioButton();
+            this.SelNaiveMid = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorCanvas)).BeginInit();
             this.flowLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.94937F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.05063F));
-            this.tableLayoutPanel1.Controls.Add(this.colorCanvas, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 1, 0);
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.31805F));
+            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 302F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1679, 933);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5387F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.4613F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 157F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 152F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2521, 487);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
             // 
             // colorCanvas
             // 
-            this.colorCanvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.colorCanvas.Location = new System.Drawing.Point(3, 3);
             this.colorCanvas.Name = "colorCanvas";
-            this.tableLayoutPanel1.SetRowSpan(this.colorCanvas, 3);
-            this.colorCanvas.Size = new System.Drawing.Size(244, 927);
+            this.colorCanvas.Size = new System.Drawing.Size(2397, 114);
             this.colorCanvas.TabIndex = 0;
             this.colorCanvas.TabStop = false;
             this.colorCanvas.Click += new System.EventHandler(this.colorCanvas_Click);
@@ -82,9 +84,9 @@
             this.flowLayoutPanel2.Controls.Add(this.SelRGB);
             this.flowLayoutPanel2.Controls.Add(this.SelHSV);
             this.flowLayoutPanel2.Controls.Add(this.SelYUV);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(253, 318);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 209);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1423, 309);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(2515, 117);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
             // label2
@@ -132,50 +134,19 @@
             this.SelYUV.UseVisualStyleBackColor = true;
             this.SelYUV.CheckedChanged += new System.EventHandler(this.SelYUV_CheckedChanged);
             // 
-            // SelNaiveFirst
+            // groupBox1
             // 
-            this.SelNaiveFirst.AutoSize = true;
-            this.SelNaiveFirst.Location = new System.Drawing.Point(27, 54);
-            this.SelNaiveFirst.Name = "SelNaiveFirst";
-            this.SelNaiveFirst.Size = new System.Drawing.Size(211, 36);
-            this.SelNaiveFirst.TabIndex = 1;
-            this.SelNaiveFirst.Text = "Naive (RGB)";
-            this.SelNaiveFirst.UseVisualStyleBackColor = true;
-            this.SelNaiveFirst.CheckedChanged += new System.EventHandler(this.SelNaiveFirst_CheckedChanged);
-            // 
-            // SelNaiveMid
-            // 
-            this.SelNaiveMid.AutoSize = true;
-            this.SelNaiveMid.Location = new System.Drawing.Point(268, 54);
-            this.SelNaiveMid.Name = "SelNaiveMid";
-            this.SelNaiveMid.Size = new System.Drawing.Size(211, 36);
-            this.SelNaiveMid.TabIndex = 2;
-            this.SelNaiveMid.Text = "Naive (BGR)";
-            this.SelNaiveMid.UseVisualStyleBackColor = true;
-            this.SelNaiveMid.CheckedChanged += new System.EventHandler(this.SelNaiveMid_CheckedChanged);
-            // 
-            // SelNaiveLast
-            // 
-            this.SelNaiveLast.AutoSize = true;
-            this.SelNaiveLast.Location = new System.Drawing.Point(519, 54);
-            this.SelNaiveLast.Name = "SelNaiveLast";
-            this.SelNaiveLast.Size = new System.Drawing.Size(211, 36);
-            this.SelNaiveLast.TabIndex = 3;
-            this.SelNaiveLast.Text = "Naive (RBG)";
-            this.SelNaiveLast.UseVisualStyleBackColor = true;
-            this.SelNaiveLast.CheckedChanged += new System.EventHandler(this.SelNaiveLast_CheckedChanged);
-            // 
-            // SelLum
-            // 
-            this.SelLum.AutoSize = true;
-            this.SelLum.Location = new System.Drawing.Point(27, 96);
-            this.SelLum.Name = "SelLum";
-            this.SelLum.Size = new System.Drawing.Size(189, 36);
-            this.SelLum.TabIndex = 0;
-            this.SelLum.TabStop = true;
-            this.SelLum.Text = "Luminosity";
-            this.SelLum.UseVisualStyleBackColor = true;
-            this.SelLum.CheckedChanged += new System.EventHandler(this.SelLum_CheckedChanged);
+            this.groupBox1.Controls.Add(this.SelNeighbor);
+            this.groupBox1.Controls.Add(this.SelLum);
+            this.groupBox1.Controls.Add(this.SelNaiveFirst);
+            this.groupBox1.Controls.Add(this.SelNaiveLast);
+            this.groupBox1.Controls.Add(this.SelNaiveMid);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(2515, 200);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Order By:";
             // 
             // SelNeighbor
             // 
@@ -189,25 +160,66 @@
             this.SelNeighbor.UseVisualStyleBackColor = true;
             this.SelNeighbor.CheckedChanged += new System.EventHandler(this.SelNeighbor_CheckedChanged);
             // 
-            // groupBox1
+            // SelLum
             // 
-            this.groupBox1.Controls.Add(this.SelNeighbor);
-            this.groupBox1.Controls.Add(this.SelLum);
-            this.groupBox1.Controls.Add(this.SelNaiveFirst);
-            this.groupBox1.Controls.Add(this.SelNaiveLast);
-            this.groupBox1.Controls.Add(this.SelNaiveMid);
-            this.groupBox1.Location = new System.Drawing.Point(253, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1423, 309);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Order By:";
+            this.SelLum.AutoSize = true;
+            this.SelLum.Location = new System.Drawing.Point(27, 96);
+            this.SelLum.Name = "SelLum";
+            this.SelLum.Size = new System.Drawing.Size(189, 36);
+            this.SelLum.TabIndex = 0;
+            this.SelLum.TabStop = true;
+            this.SelLum.Text = "Luminosity";
+            this.SelLum.UseVisualStyleBackColor = true;
+            this.SelLum.CheckedChanged += new System.EventHandler(this.SelLum_CheckedChanged);
+            // 
+            // SelNaiveFirst
+            // 
+            this.SelNaiveFirst.AutoSize = true;
+            this.SelNaiveFirst.Location = new System.Drawing.Point(27, 54);
+            this.SelNaiveFirst.Name = "SelNaiveFirst";
+            this.SelNaiveFirst.Size = new System.Drawing.Size(211, 36);
+            this.SelNaiveFirst.TabIndex = 1;
+            this.SelNaiveFirst.Text = "Naive (RGB)";
+            this.SelNaiveFirst.UseVisualStyleBackColor = true;
+            this.SelNaiveFirst.CheckedChanged += new System.EventHandler(this.SelNaiveFirst_CheckedChanged);
+            // 
+            // SelNaiveLast
+            // 
+            this.SelNaiveLast.AutoSize = true;
+            this.SelNaiveLast.Location = new System.Drawing.Point(519, 54);
+            this.SelNaiveLast.Name = "SelNaiveLast";
+            this.SelNaiveLast.Size = new System.Drawing.Size(211, 36);
+            this.SelNaiveLast.TabIndex = 3;
+            this.SelNaiveLast.Text = "Naive (RBG)";
+            this.SelNaiveLast.UseVisualStyleBackColor = true;
+            this.SelNaiveLast.CheckedChanged += new System.EventHandler(this.SelNaiveLast_CheckedChanged);
+            // 
+            // SelNaiveMid
+            // 
+            this.SelNaiveMid.AutoSize = true;
+            this.SelNaiveMid.Location = new System.Drawing.Point(268, 54);
+            this.SelNaiveMid.Name = "SelNaiveMid";
+            this.SelNaiveMid.Size = new System.Drawing.Size(211, 36);
+            this.SelNaiveMid.TabIndex = 2;
+            this.SelNaiveMid.Text = "Naive (BGR)";
+            this.SelNaiveMid.UseVisualStyleBackColor = true;
+            this.SelNaiveMid.CheckedChanged += new System.EventHandler(this.SelNaiveMid_CheckedChanged);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.colorCanvas);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 332);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(2515, 152);
+            this.flowLayoutPanel1.TabIndex = 5;
+            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1679, 933);
+            this.ClientSize = new System.Drawing.Size(2521, 487);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Experience Color Ordering";
@@ -217,6 +229,7 @@
             this.flowLayoutPanel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -236,6 +249,7 @@
         private System.Windows.Forms.RadioButton SelLum;
         private System.Windows.Forms.RadioButton SelNeighbor;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
 

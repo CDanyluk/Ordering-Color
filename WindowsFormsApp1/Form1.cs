@@ -29,9 +29,9 @@ namespace WindowsFormsApp1
             DrawArea = new Bitmap(colorCanvas.Size.Width, colorCanvas.Size.Height);
             colorCanvas.Image = DrawArea;
 
-            height = colorCanvas.Height;
+            width = colorCanvas.Width;
             //call colororganizer to generate a new list of colors
-            co.generateColors(height);
+            co.generateColors(width);
             List<Color> myColors = co.getColors();
             ViewColorList(myColors);
         }
@@ -105,14 +105,16 @@ namespace WindowsFormsApp1
             g = Graphics.FromImage(DrawArea);
 
             //Go through and create random colors to draw as rectangles on the bitmap using graphics g
-            upx = 0;
+            upy = 0;
             height = colorCanvas.Height;
             width = colorCanvas.Width;
+            int pixelwidth = 3;
             //Go through canvas and draw colorlist
-            for (upy = 0; upy < (height - 10); upy += 10)
+            for (upx = 0; upx < (width - pixelwidth); upx += pixelwidth)
             {
-                SolidBrush sb = new SolidBrush(colorlist[(upy / 10)]);
-                g.FillRectangle(sb, upx, upy, width, upy + 10);
+                SolidBrush sb = new SolidBrush(colorlist[(upx / pixelwidth)]);
+                g.FillRectangle(sb, upx, upy, upx + pixelwidth, height);
+                //g.FillRectangle(sb, upx, upy, height, upy + pixelwidth);
             }
             //Set the area drawn on to be used by the picturebox
             colorCanvas.Image = DrawArea;
@@ -215,6 +217,16 @@ namespace WindowsFormsApp1
             //Get the sorted colorlist from graph
             List<Color> myColors = graph.colorlist;
             ViewColorList(myColors);
+        }
+
+        private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

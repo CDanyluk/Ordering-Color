@@ -25,11 +25,13 @@ namespace OrderColors
         }
 
         //generates the random color list needed
-        public void generateColors(int height)
+        public void generateColors(int width)
         {
             myColors.Clear();
             Color randomColor = Color.White;
-            for (int i = 0; i < (height/10); i++)
+            //where pixelwidth sets how thick each color should be
+            int pixelwidth = 3;
+            for (int i = 0; i < (width/pixelwidth); i++)
             {
                 //Add the random colors to the stored color list
                 randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
