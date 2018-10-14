@@ -51,6 +51,7 @@ namespace WindowsFormsApp1
             SelNaiveFirst.Text = "Naive (RGB)";
             SelNaiveMid.Text = "Naive (BGR)";
             SelNaiveLast.Text = "Naive (RBG)";
+            SelNeighbor.Text = "Nearest Neighbor (RGB)";
         }
 
         //RGB or HSV
@@ -124,6 +125,7 @@ namespace WindowsFormsApp1
             SelNaiveFirst.Text = "Naive (HSV)";
             SelNaiveMid.Text = "Naive (VSH)";
             SelNaiveLast.Text = "Naive (HVS)";
+            SelNeighbor.Text = "Nearest Neighbor (HSV)";
         }
 
         private void Sort_Click(object sender, EventArgs e)
@@ -197,9 +199,21 @@ namespace WindowsFormsApp1
 
         private void SelNeighbor_CheckedChanged(object sender, EventArgs e)
         {
-            RGBGraph rgbgraph = new RGBGraph(co.getColors());
-            rgbgraph.ShortestPath();
-            List<Color> myColors = rgbgraph.colorlist;
+            //create a new graph to run nearest neighbor on
+            Graph graph = new Graph(co.getColors());
+
+            //depending on hsv or rgb being selected pass the appropraite string
+            //so that the nearest neighbor algorithm can run on those values
+            if (SelRGB.Checked == true)
+            {
+                graph.ShortestPath("RGB");
+            }
+            else if (SelHSV.Checked == true)
+            {
+                graph.ShortestPath("HSB");
+            }
+            //Get the sorted colorlist from graph
+            List<Color> myColors = graph.colorlist;
             ViewColorList(myColors);
         }
     }
