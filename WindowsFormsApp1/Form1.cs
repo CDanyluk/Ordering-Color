@@ -189,7 +189,9 @@ namespace WindowsFormsApp1
 
         private void SelLum_CheckedChanged(object sender, EventArgs e)
         {
-           
+            co.Luminosity();
+            List<Color> myColors = co.getColors();
+            ViewColorList(myColors);
         }
 
         private void SelYUV_CheckedChanged(object sender, EventArgs e)

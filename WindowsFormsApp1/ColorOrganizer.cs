@@ -363,6 +363,30 @@ namespace OrderColors
 
         }
 
+        public void Luminosity()
+        {
+
+            for (int i = 0; i < myColors.Count() - 1; i++)
+            {
+                for (int j = 0; j < myColors.Count() - i - 1; j++)
+                {
+
+                    double lum1 = Math.Sqrt(.241 * myColors[j].R + .691 * myColors[j].G + .068 * myColors[j].B);
+                    double lum2 = Math.Sqrt(.241 * myColors[j+1].R + .691 * myColors[j+1].G + .068 * myColors[j+1].B);
+
+                    if (lum1 > lum2)
+                    {
+                        Color temp = myColors[j];
+                        myColors[j] = myColors[j + 1];
+                        myColors[j + 1] = temp;
+                    }
+
+                }
+
+            }
+
+        }
+
         public Tuple<double, double, double> ToYUV(double R, double G, double B)
         {
             double Y = (0.299 * R) + (0.587 * G) + (0.114 * B);
