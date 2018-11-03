@@ -17,17 +17,40 @@ namespace OrderColors
             this.colorlist = myColors;
         }
 
+        public void zOrdering(String colortype)
+        {
+            //Create a list of all the points based off of the colors in colorlist
+            List<Point> pointlist = new List<Point>();
+            if (colortype == "RGB")
+            {
+                pointlist = CreatePointListRGB(true);
+            }
+            else if (colortype == "HSB")
+            {
+                pointlist = CreatePointListHSB(true);
+            }
+
+            //Sort on the zval of pointlist
+            pointlist.Sort((first, second) => first.zval.CompareTo(second.zval));
+
+            //Now turn it back into a colorlist
+            colorlist = CreateColorList(pointlist);
+
+        }
+
+
+
         public void ShortestPath(String colortype)
         {
             //Create a list of all the points based off of the colors in colorlist
             List<Point> pointlist = new List<Point>();
             if (colortype == "RGB")
             {
-                pointlist = CreatePointListRGB();
+                pointlist = CreatePointListRGB(false);
             }
             else if (colortype == "HSB")
             {
-                pointlist = CreatePointListHSB();
+                pointlist = CreatePointListHSB(false);
             }
 
             //Create a dictionary to keep track of the colorlists distances
@@ -49,74 +72,6 @@ namespace OrderColors
 
         }
 
-        ////test function
-        //public bool ChangedPoint(Color c)
-        //{
-        //    //convert color to point
-        //    double x = c.R;
-        //    double y = c.G;
-        //    double z = c.B;
-        //    string color = x + "," + y + "," + z;
-        //    Console.WriteLine("RGB: " + color);
-        //    Point p = new Point(x, y, z, Double.MaxValue);
-        //    //convert point to color
-        //    double R = p.x;
-        //    double G = p.y;
-        //    double B = p.z;
-        //    string point = R + "," + G + "," + B;
-        //    Color tempcolor = Color.FromArgb(255, (byte)(R * 255.0), (byte)(G * 255.0), (byte)(B * 255.0));
-        //    Console.WriteLine("point = " + point);
-        //    return c == tempcolor;
-
-        //}
-
-        ////test function
-        //public bool ChangedColorList(List<Color> colorlist1, List<Color> colorlist2)
-        //{
-        //    for (int i = 0; i < colorlist1.Count; i++)
-        //    {
-        //        if (colorlist2.Contains(colorlist1[i]) == false)
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    return true;
-        //}
-
-        ////test function
-        //public bool ChangedPointList(List<Point> pointlist1, List<Point> pointlist2)
-        //{
-        //    for (int i = 0; i < pointlist1.Count; i++)
-        //    {
-        //        //set temp to be false
-        //        bool temp = false;
-        //        for (int j = 0; j < pointlist2.Count; j++)
-        //        {
-        //            double x1 = pointlist1[i].x;
-        //            double y1 = pointlist1[i].y;
-        //            double z1 = pointlist1[i].z;
-
-        //            double x2 = pointlist2[j].x;
-        //            double y2 = pointlist2[j].y;
-        //            double z2 = pointlist2[j].z;
-
-        //            //only if it finds the points are equal will it let temp be true
-        //            if ((x1 == x2) && (y1 == y2) && (z1 == z2))
-        //            {
-        //                temp = true;
-        //            }
-        //        }
-        //        //if it doesn't find a match at the end of the for loop
-        //        //then return false
-        //        if (temp == false)
-        //        {
-        //            return false;
-        //        }
-
-        //    }
-        //    //otherwise absolutely return true
-        //    return true;
-        //}
 
         public Tuple<double, List<Color>> NearestNeighbors(Point p, List<Point> pointlist, String colortype)
         {
@@ -155,7 +110,7 @@ namespace OrderColors
 
         }
 
-        public List<Point> CreatePointListRGB()
+        public List<Point> CreatePointListRGB(bool zorder)
         {
             List<Point> pointlist = new List<Point>();
             for (int i = 0; i < colorlist.Count; i++)
@@ -164,13 +119,13 @@ namespace OrderColors
                 double y = colorlist[i].G;
                 double z = colorlist[i].B;
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i]);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder);
                 pointlist.Add(tempPoint);
             }
             return pointlist;
         }
 
-        public List<Point> CreatePointListHSB()
+        public List<Point> CreatePointListHSB(bool zorder)
         {
             List<Point> pointlist = new List<Point>();
             for (int i = 0; i < colorlist.Count; i++)
@@ -179,27 +134,12 @@ namespace OrderColors
                 double y = colorlist[i].GetSaturation();
                 double z = colorlist[i].GetBrightness();
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i]);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder);
                 pointlist.Add(tempPoint);
             }
             return pointlist;
         }
 
-        //public List<Color> CreateColorListRGB(List<Point> pointlist)
-        //{
-        //    List<Color> tempcolorlist = new List<Color>();
-        //    for (int i = 0; i < pointlist.Count; i++)
-        //    {
-        //        double R = pointlist[i].x;
-        //        double G = pointlist[i].y;
-        //        double B = pointlist[i].z;
-        //        Color tempcolor = Color.FromArgb(255, Convert.ToInt32(R), Convert.ToInt32(G), Convert.ToInt32(B));
-        //        tempcolorlist.Add(tempcolor);
-        //    }
-
-        //    return tempcolorlist;
-
-        //}
 
         public List<Color> CreateColorList(List<Point> pointlist)
         {
@@ -214,74 +154,6 @@ namespace OrderColors
 
         }
 
-        //public List<Color> CreateColorListHSB(List<Point> pointlist)
-        //{
-        //    List<Color> tempcolorlist = new List<Color>();
-        //    for (int i = 0; i < pointlist.Count; i++)
-        //    {
-        //        double Hue = pointlist[i].x;
-        //        double Saturation = pointlist[i].y;
-        //        double Brightness = pointlist[i].z;
-        //        Color tempcolor = HSBtoRGB(Hue, Saturation, Brightness);
-        //        tempcolorlist.Add(tempcolor);
-        //    }
-
-        //    return tempcolorlist;
-
-        //}
-
-        ////code copied from:
-        ////https://stackoverflow.com/questions/4106363/converting-rgb-to-hsb-colors
-        //public static Color HSBtoRGB(double hue, double saturation, double brightness)
-        //{
-        //    int r = 0, g = 0, b = 0;
-        //    if (saturation == 0)
-        //    {
-        //        r = g = b = (int)(brightness * 255.0f + 0.5f);
-        //    }
-        //    else
-        //    {
-        //        double h = (hue - Math.Floor(hue)) * 6.0f;
-        //        double f = h - Math.Floor(h);
-        //        double p = brightness * (1.0f - saturation);
-        //        double q = brightness * (1.0f - saturation * f);
-        //        double t = brightness * (1.0f - (saturation * (1.0f - f)));
-        //        switch ((int)h)
-        //        {
-        //            case 0:
-        //                r = (int)(brightness * 255.0f + 0.5f);
-        //                g = (int)(t * 255.0f + 0.5f);
-        //                b = (int)(p * 255.0f + 0.5f);
-        //                break;
-        //            case 1:
-        //                r = (int)(q * 255.0f + 0.5f);
-        //                g = (int)(brightness * 255.0f + 0.5f);
-        //                b = (int)(p * 255.0f + 0.5f);
-        //                break;
-        //            case 2:
-        //                r = (int)(p * 255.0f + 0.5f);
-        //                g = (int)(brightness * 255.0f + 0.5f);
-        //                b = (int)(t * 255.0f + 0.5f);
-        //                break;
-        //            case 3:
-        //                r = (int)(p * 255.0f + 0.5f);
-        //                g = (int)(q * 255.0f + 0.5f);
-        //                b = (int)(brightness * 255.0f + 0.5f);
-        //                break;
-        //            case 4:
-        //                r = (int)(t * 255.0f + 0.5f);
-        //                g = (int)(p * 255.0f + 0.5f);
-        //                b = (int)(brightness * 255.0f + 0.5f);
-        //                break;
-        //            case 5:
-        //                r = (int)(brightness * 255.0f + 0.5f);
-        //                g = (int)(p * 255.0f + 0.5f);
-        //                b = (int)(q * 255.0f + 0.5f);
-        //                break;
-        //        }
-        //    }
-        //    return Color.FromArgb(Convert.ToByte(255), Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b));
-        //}
 
         public double GetDistance(Point first, Point second)
         {

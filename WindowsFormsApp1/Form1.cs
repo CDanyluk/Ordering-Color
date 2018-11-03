@@ -52,6 +52,7 @@ namespace WindowsFormsApp1
             SelNaiveMid.Text = "Naive (BGR)";
             SelNaiveLast.Text = "Naive (RBG)";
             SelNeighbor.Text = "Nearest Neighbor (RGB)";
+            selZOrder.Text = "Z-Order Curve (RGB)";
         }
 
         //RGB or HSV
@@ -128,6 +129,7 @@ namespace WindowsFormsApp1
             SelNaiveMid.Text = "Naive (VSH)";
             SelNaiveLast.Text = "Naive (HVS)";
             SelNeighbor.Text = "Nearest Neighbor (HSV)";
+            selZOrder.Text = "Z-Order Curve (HSV)";
         }
 
         private void Sort_Click(object sender, EventArgs e)
@@ -229,6 +231,26 @@ namespace WindowsFormsApp1
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void selZOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            //create a new graph to run nearest neighbor on
+            Graph graph = new Graph(co.getColors());
+
+            //depending on hsv or rgb being selected pass the appropraite string
+            //so that the nearest neighbor algorithm can run on those values
+            if (SelRGB.Checked == true)
+            {
+                graph.zOrdering("RGB");
+            }
+            else if (SelHSV.Checked == true)
+            {
+                graph.zOrdering("HSB");
+            }
+            //Get the sorted colorlist from graph
+            List<Color> myColors = graph.colorlist;
+            ViewColorList(myColors);
         }
     }
 }
