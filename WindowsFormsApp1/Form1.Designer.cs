@@ -30,6 +30,7 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.selZOrder = new System.Windows.Forms.RadioButton();
             this.SelNeighbor = new System.Windows.Forms.RadioButton();
             this.SelLum = new System.Windows.Forms.RadioButton();
             this.SelNaiveFirst = new System.Windows.Forms.RadioButton();
@@ -42,7 +43,8 @@
             this.SelYUV = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.colorCanvas = new System.Windows.Forms.PictureBox();
-            this.selZOrder = new System.Windows.Forms.RadioButton();
+            this.SelHilbert = new System.Windows.Forms.RadioButton();
+            this.SelPeano = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -61,8 +63,8 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.48718F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.51282F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.33176F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.66825F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -72,6 +74,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.SelPeano);
+            this.groupBox1.Controls.Add(this.SelHilbert);
             this.groupBox1.Controls.Add(this.selZOrder);
             this.groupBox1.Controls.Add(this.SelNeighbor);
             this.groupBox1.Controls.Add(this.SelLum);
@@ -80,10 +84,22 @@
             this.groupBox1.Controls.Add(this.SelNaiveMid);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(2515, 287);
+            this.groupBox1.Size = new System.Drawing.Size(2515, 333);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Order By:";
+            // 
+            // selZOrder
+            // 
+            this.selZOrder.AutoSize = true;
+            this.selZOrder.Location = new System.Drawing.Point(27, 180);
+            this.selZOrder.Name = "selZOrder";
+            this.selZOrder.Size = new System.Drawing.Size(318, 36);
+            this.selZOrder.TabIndex = 4;
+            this.selZOrder.TabStop = true;
+            this.selZOrder.Text = "Z-Order Curve (RGB)";
+            this.selZOrder.UseVisualStyleBackColor = true;
+            this.selZOrder.CheckedChanged += new System.EventHandler(this.selZOrder_CheckedChanged);
             // 
             // SelNeighbor
             // 
@@ -148,9 +164,9 @@
             this.flowLayoutPanel2.Controls.Add(this.SelRGB);
             this.flowLayoutPanel2.Controls.Add(this.SelHSV);
             this.flowLayoutPanel2.Controls.Add(this.SelYUV);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 296);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 342);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(2515, 123);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(2515, 77);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
             // label2
@@ -217,17 +233,27 @@
             this.colorCanvas.TabStop = false;
             this.colorCanvas.Click += new System.EventHandler(this.colorCanvas_Click);
             // 
-            // selZOrder
+            // SelHilbert
             // 
-            this.selZOrder.AutoSize = true;
-            this.selZOrder.Location = new System.Drawing.Point(27, 180);
-            this.selZOrder.Name = "selZOrder";
-            this.selZOrder.Size = new System.Drawing.Size(318, 36);
-            this.selZOrder.TabIndex = 4;
-            this.selZOrder.TabStop = true;
-            this.selZOrder.Text = "Z-Order Curve (RGB)";
-            this.selZOrder.UseVisualStyleBackColor = true;
-            this.selZOrder.CheckedChanged += new System.EventHandler(this.selZOrder_CheckedChanged);
+            this.SelHilbert.AutoSize = true;
+            this.SelHilbert.Location = new System.Drawing.Point(27, 223);
+            this.SelHilbert.Name = "SelHilbert";
+            this.SelHilbert.Size = new System.Drawing.Size(303, 36);
+            this.SelHilbert.TabIndex = 5;
+            this.SelHilbert.TabStop = true;
+            this.SelHilbert.Text = "Hilbert Curve (RGB)";
+            this.SelHilbert.UseVisualStyleBackColor = true;
+            // 
+            // SelPeano
+            // 
+            this.SelPeano.AutoSize = true;
+            this.SelPeano.Location = new System.Drawing.Point(27, 266);
+            this.SelPeano.Name = "SelPeano";
+            this.SelPeano.Size = new System.Drawing.Size(303, 36);
+            this.SelPeano.TabIndex = 6;
+            this.SelPeano.TabStop = true;
+            this.SelPeano.Text = "Peano Curve (RGB)";
+            this.SelPeano.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -265,6 +291,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton selZOrder;
+        private System.Windows.Forms.RadioButton SelHilbert;
+        private System.Windows.Forms.RadioButton SelPeano;
     }
 }
 

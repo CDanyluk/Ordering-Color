@@ -42,35 +42,9 @@ namespace OrderColors
         //sorts the color list the naive way
         public void naiveRGB()
         {
-            //Bubblesort naive implementation
-            for (int i = 0; i < myColors.Count()-1; i++)
-            {
-                for (int j = 0; j < myColors.Count()-i-1; j++)
-                {
-                    if (myColors[j].R > myColors[j + 1].R)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j+1];
-                        myColors[j+1] = temp;
-                    }
 
-                    if (myColors[j].G > myColors[j + 1].G)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                    if (myColors[j].B > myColors[j + 1].B)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                }
-                
-            }
+            List<Color> newList = myColors;
+            myColors = QuickSort(newList, 0, newList.Count - 1, "B");
 
         }
 
@@ -176,69 +150,15 @@ namespace OrderColors
 
         public void naiveRBG()
         {
-            //Bubblesort naive implementation
-            for (int i = 0; i < myColors.Count() - 1; i++)
-            {
-                for (int j = 0; j < myColors.Count() - i - 1; j++)
-                {
-                    if (myColors[j].R > myColors[j + 1].R)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                    if (myColors[j].B > myColors[j + 1].B)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                    if (myColors[j].G > myColors[j + 1].G)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                }
-
-            }
+            List<Color> newList = myColors;
+            myColors = QuickSort(newList, 0, newList.Count - 1, "G");
 
         }
 
         public void naiveBGR()
         {
-            //Bubblesort naive implementation
-            for (int i = 0; i < myColors.Count() - 1; i++)
-            {
-                for (int j = 0; j < myColors.Count() - i - 1; j++)
-                {
-                    if (myColors[j].B > myColors[j + 1].B)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                    if (myColors[j].G > myColors[j + 1].G)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                    if (myColors[j].R > myColors[j + 1].R)
-                    {
-                        Color temp = myColors[j];
-                        myColors[j] = myColors[j + 1];
-                        myColors[j + 1] = temp;
-                    }
-
-                }
-
-            }
+            List<Color> newList = myColors;
+            myColors = QuickSort(newList, 0, newList.Count - 1, "R");
 
         }
 
@@ -387,6 +307,12 @@ namespace OrderColors
 
         }
 
+        public void RGBSort()
+        {
+            List<Color> newList = myColors;
+            myColors = QuickSort(newList, 0, newList.Count-1, "R");
+        }
+
         public Tuple<double, double, double> ToYUV(double R, double G, double B)
         {
             double Y = (0.299 * R) + (0.587 * G) + (0.114 * B);
@@ -395,47 +321,67 @@ namespace OrderColors
             return Tuple.Create(Y, U, V);
         }
 
-        //public void quickSort(RGBGraph graph, int left, int right)
-        //{
-        //    //notes
-        //    int i = left;
-        //    int j = right;
+        public List<Color> QuickSort(List<Color> listColor, int low, int high, string value)
+        {
+            if (low < high)
+            {
+                int index = Partition(listColor, low, high, value);
 
-        //    //Get pivot in the middle
-        //    Point pivot = graph.Get((left + right) / 2);
+                QuickSort(listColor, low, index - 1, value);
+                QuickSort(listColor, index + 1, high, value);
+            }
+            return listColor;
+        }
 
-        //    while (i <= j)
-        //    {
-        //        while (graph.Get(i).R < pivot.R)
-        //        {
-        //            i++;
-        //        }
+        public int Partition(List<Color> listColor, int low, int high, string value)
+        {
+            //pivot element
+            Color pivot = listColor[(low + high) / 2];
 
-        //        while (graph.Get(i).R > pivot.R)
-        //        {
-        //            j--;
-        //        }
+            int i = (low - 1);
 
-        //        if (i <= j)
-        //        {
-        //            //Swap
-        //            graph.Swap(i, j);
-
-        //            i++;
-        //            j--;
-        //        }
-        //    }
-
-        //    //Recursive call
-        //    if (left < j)
-        //    {
-        //        quickSort(graph, left, j);
-        //    }
-
-        //    if (i < right)
-        //    {
-        //        quickSort(graph, i, right);
-        //    }
-        //}
+            for (int j = low; j <= high - 1; j++)
+            {
+                // If current element is smaller than or
+                // equal to pivot
+                if (value == "R")
+                {
+                    if (listColor[j].R <= pivot.R)
+                    {
+                        i++;    // increment index of smaller element
+                                //swap arr[i] and arr[j]
+                        Color temp = listColor[i];
+                        listColor[i] = listColor[j];
+                        listColor[j] = temp;
+                    }
+                }else if (value == "G")
+                {
+                    if (listColor[j].G <= pivot.G)
+                    {
+                        i++;    // increment index of smaller element
+                                //swap arr[i] and arr[j]
+                        Color temp = listColor[i];
+                        listColor[i] = listColor[j];
+                        listColor[j] = temp;
+                    }
+                }else if (value == "B")
+                {
+                    if (listColor[j].B <= pivot.B)
+                    {
+                        i++;    // increment index of smaller element
+                                //swap arr[i] and arr[j]
+                        Color temp = listColor[i];
+                        listColor[i] = listColor[j];
+                        listColor[j] = temp;
+                    }
+                }
+               
+            }
+            //swap arr[i + 1] and arr[high])
+            Color temp2 = listColor[i + 1];
+            listColor[i + 1] = listColor[high];
+            listColor[high] = temp2;
+            return i + 1;
+        }
     }
 }
