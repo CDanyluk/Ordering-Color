@@ -235,11 +235,11 @@ namespace WindowsFormsApp1
 
         private void selZOrder_CheckedChanged(object sender, EventArgs e)
         {
-            //create a new graph to run nearest neighbor on
+            //create a new graph to run Zorder on
             Graph graph = new Graph(co.getColors());
 
             //depending on hsv or rgb being selected pass the appropraite string
-            //so that the nearest neighbor algorithm can run on those values
+            //so that the algorithm can run on those values
             if (SelRGB.Checked == true)
             {
                 graph.zOrdering("RGB");
@@ -248,6 +248,20 @@ namespace WindowsFormsApp1
             {
                 graph.zOrdering("HSB");
             }
+            //Get the sorted colorlist from graph
+            List<Color> myColors = graph.colorlist;
+            ViewColorList(myColors);
+        }
+
+        private void SelHilbert_CheckedChanged(object sender, EventArgs e)
+        {
+            //create a new graph to run Zorder on
+            Graph graph = new Graph(co.getColors());
+
+            //depending on hsv or rgb being selected pass the appropraite string
+            //so that the algorithm can run on those values
+            graph.hOrdering();
+
             //Get the sorted colorlist from graph
             List<Color> myColors = graph.colorlist;
             ViewColorList(myColors);

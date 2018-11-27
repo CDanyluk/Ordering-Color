@@ -17,6 +17,7 @@ namespace OrderColors
             this.colorlist = myColors;
         }
 
+        //z Order curve implementation
         public void zOrdering(String colortype)
         {
             //Create a list of all the points based off of the colors in colorlist
@@ -36,6 +37,30 @@ namespace OrderColors
             //Now turn it back into a colorlist
             colorlist = CreateColorList(pointlist);
 
+        }
+
+        //hilbert curve implementation
+        public void hOrdering()
+        {
+            //Create a list of all the points based off of the colors in colorlist
+            List<Point> pointlist = new List<Point>();
+            for (int i = 0; i < colorlist.Count; i++)
+            {
+                double x = colorlist[i].R;
+                double y = colorlist[i].G;
+                double z = colorlist[i].B;
+                //Console.WriteLine(x + "," + y + "," + z);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], false, true);
+                pointlist.Add(tempPoint);
+                Console.WriteLine("reg poin = " + x + "," + y + "," + z);
+                Console.WriteLine("tempPoint = " + tempPoint.x + "," + tempPoint.y + "," + tempPoint.z);
+            }
+
+            //Sort on the hilbert value or hval of pointlist
+            pointlist.Sort((first, second) => first.hval.CompareTo(second.hval));
+
+            //Now turn it back into a colorlist
+            colorlist = CreateColorList(pointlist);
         }
 
 
@@ -119,7 +144,7 @@ namespace OrderColors
                 double y = colorlist[i].G;
                 double z = colorlist[i].B;
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder, false);
                 pointlist.Add(tempPoint);
             }
             return pointlist;
@@ -134,7 +159,7 @@ namespace OrderColors
                 double y = colorlist[i].GetSaturation();
                 double z = colorlist[i].GetBrightness();
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder, false);
                 pointlist.Add(tempPoint);
             }
             return pointlist;

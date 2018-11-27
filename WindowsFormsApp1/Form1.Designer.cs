@@ -30,6 +30,8 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SelPeano = new System.Windows.Forms.RadioButton();
+            this.SelHilbert = new System.Windows.Forms.RadioButton();
             this.selZOrder = new System.Windows.Forms.RadioButton();
             this.SelNeighbor = new System.Windows.Forms.RadioButton();
             this.SelLum = new System.Windows.Forms.RadioButton();
@@ -43,8 +45,6 @@
             this.SelYUV = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.colorCanvas = new System.Windows.Forms.PictureBox();
-            this.SelHilbert = new System.Windows.Forms.RadioButton();
-            this.SelPeano = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -68,7 +68,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(2521, 548);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2521, 602);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
             // 
@@ -84,10 +84,33 @@
             this.groupBox1.Controls.Add(this.SelNaiveMid);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(2515, 333);
+            this.groupBox1.Size = new System.Drawing.Size(2515, 377);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Order By:";
+            // 
+            // SelPeano
+            // 
+            this.SelPeano.AutoSize = true;
+            this.SelPeano.Location = new System.Drawing.Point(27, 266);
+            this.SelPeano.Name = "SelPeano";
+            this.SelPeano.Size = new System.Drawing.Size(303, 36);
+            this.SelPeano.TabIndex = 6;
+            this.SelPeano.TabStop = true;
+            this.SelPeano.Text = "Peano Curve (RGB)";
+            this.SelPeano.UseVisualStyleBackColor = true;
+            // 
+            // SelHilbert
+            // 
+            this.SelHilbert.AutoSize = true;
+            this.SelHilbert.Location = new System.Drawing.Point(27, 223);
+            this.SelHilbert.Name = "SelHilbert";
+            this.SelHilbert.Size = new System.Drawing.Size(303, 36);
+            this.SelHilbert.TabIndex = 5;
+            this.SelHilbert.TabStop = true;
+            this.SelHilbert.Text = "Hilbert Curve (RGB)";
+            this.SelHilbert.UseVisualStyleBackColor = true;
+            this.SelHilbert.CheckedChanged += new System.EventHandler(this.SelHilbert_CheckedChanged);
             // 
             // selZOrder
             // 
@@ -164,7 +187,7 @@
             this.flowLayoutPanel2.Controls.Add(this.SelRGB);
             this.flowLayoutPanel2.Controls.Add(this.SelHSV);
             this.flowLayoutPanel2.Controls.Add(this.SelYUV);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 342);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 386);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(2515, 77);
             this.flowLayoutPanel2.TabIndex = 2;
@@ -218,7 +241,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.colorCanvas);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 425);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 479);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(2515, 120);
             this.flowLayoutPanel1.TabIndex = 5;
@@ -228,38 +251,16 @@
             // 
             this.colorCanvas.Location = new System.Drawing.Point(3, 3);
             this.colorCanvas.Name = "colorCanvas";
-            this.colorCanvas.Size = new System.Drawing.Size(2397, 114);
+            this.colorCanvas.Size = new System.Drawing.Size(2515, 114);
             this.colorCanvas.TabIndex = 0;
             this.colorCanvas.TabStop = false;
             this.colorCanvas.Click += new System.EventHandler(this.colorCanvas_Click);
-            // 
-            // SelHilbert
-            // 
-            this.SelHilbert.AutoSize = true;
-            this.SelHilbert.Location = new System.Drawing.Point(27, 223);
-            this.SelHilbert.Name = "SelHilbert";
-            this.SelHilbert.Size = new System.Drawing.Size(303, 36);
-            this.SelHilbert.TabIndex = 5;
-            this.SelHilbert.TabStop = true;
-            this.SelHilbert.Text = "Hilbert Curve (RGB)";
-            this.SelHilbert.UseVisualStyleBackColor = true;
-            // 
-            // SelPeano
-            // 
-            this.SelPeano.AutoSize = true;
-            this.SelPeano.Location = new System.Drawing.Point(27, 266);
-            this.SelPeano.Name = "SelPeano";
-            this.SelPeano.Size = new System.Drawing.Size(303, 36);
-            this.SelPeano.TabIndex = 6;
-            this.SelPeano.TabStop = true;
-            this.SelPeano.Text = "Peano Curve (RGB)";
-            this.SelPeano.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2521, 548);
+            this.ClientSize = new System.Drawing.Size(2521, 602);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Experience Color Ordering";
