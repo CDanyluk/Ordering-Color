@@ -53,6 +53,8 @@ namespace WindowsFormsApp1
             SelNaiveLast.Text = "Naive (RBG)";
             SelNeighbor.Text = "Nearest Neighbor (RGB)";
             selZOrder.Text = "Z-Order Curve (RGB)";
+            selHilbert.Text = "Hilbert Curve(RGB)";
+            SelGray.Text = "Gray Code (RGB)";
         }
 
         //RGB or HSV
@@ -130,6 +132,8 @@ namespace WindowsFormsApp1
             SelNaiveLast.Text = "Naive (HVS)";
             SelNeighbor.Text = "Nearest Neighbor (HSV)";
             selZOrder.Text = "Z-Order Curve (HSV)";
+            selHilbert.Text = "Hilbert Curve(HSV)";
+            SelGray.Text = "Gray Code (HSV)";
         }
 
         private void Sort_Click(object sender, EventArgs e)
@@ -261,7 +265,14 @@ namespace WindowsFormsApp1
 
             //depending on hsv or rgb being selected pass the appropraite string
             //so that the algorithm can run on those values
-            graph.hOrdering("greycode");
+            if (SelRGB.Checked == true)
+            {
+                graph.hOrdering("RGB", "greycode");
+            }
+            else if (SelHSV.Checked == true)
+            {
+                graph.hOrdering("HSB", "greycode");
+            }
 
             //Get the sorted colorlist from graph
             List <Color> myColors = graph.colorlist;
@@ -275,7 +286,14 @@ namespace WindowsFormsApp1
 
             //depending on hsv or rgb being selected pass the appropraite string
             //so that the algorithm can run on those values
-            graph.hOrdering("hilbert");
+            if (SelRGB.Checked == true)
+            {
+                graph.hOrdering("RGB", "hilbert");
+            }
+            else if (SelHSV.Checked == true)
+            {
+                graph.hOrdering("HSB", "hilbert");
+            }
 
             //Get the sorted colorlist from graph
             List<Color> myColors = graph.colorlist;

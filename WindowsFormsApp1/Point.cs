@@ -97,24 +97,6 @@ namespace OrderColors
             hval = d;
         }
 
-        public void testHVal()
-        {
-            //convert the integers in the point to a binary representation of them
-            string bx = Convert.ToString(Convert.ToInt32(x), 2).PadLeft(16, '0');
-            string by = Convert.ToString(Convert.ToInt32(y), 2).PadLeft(16, '0');
-            string bz = Convert.ToString(Convert.ToInt32(z), 2).PadLeft(16, '0');
-
-            //store the binary values in an array to iterate over
-            uint[] bxArr = ToUIntfromString(bx);
-            uint[] byArr = ToUIntfromString(by);
-            uint[] bzArr = ToUIntfromString(bz);
-
-            //combine them into one long array
-            uint[] combined = (bxArr.Concat(byArr).ToArray()).Concat(bzArr).ToArray();
-
-            //call the weird function you found online
-            hval = HilbertIndexTransposed(combined, 256);
-        }
 
         public uint[] ToUIntfromString(string binaryrepresent)
         {
@@ -128,53 +110,6 @@ namespace OrderColors
             return ArrTemp;
         }
 
-        /// <summary>
-        /// Given the axes (coordinates) of a point in N-Dimensional space, find the distance to that point along the Hilbert curve.
-        /// That distance will be transposed; broken into pieces and distributed into an array.
-        /// 
-        /// The number of dimensions is the length of the hilbertAxes array.
-        ///
-        /// Note: In Skilling's paper, this function is called AxestoTranspose.
-        /// </summary>
-        /// <param name="hilbertAxes">Point in N-space.</param>
-        /// <param name="bits">Depth of the Hilbert curve. If bits is one, this is the top-level Hilbert curve.</param>
-        /// <returns>The Hilbert distance (or index) as a transposed Hilbert index.</returns>
-        /// https://stackoverflow.com/questions/499166/mapping-n-dimensional-value-to-a-point-on-hilbert-curve
-        public long HilbertIndexTransposed(uint[] hilbertAxes, int bits)
-        {
-            var X = (uint[])hilbertAxes.Clone();
-            var n = hilbertAxes.Length; // n: Number of dimensions
-            uint M = 1U << (bits - 1), P, Q, t;
-            int i;
-            // Inverse undo
-            for (Q = M; Q > 1; Q >>= 1)
-            {
-                P = Q - 1;
-                for (i = 0; i < n; i++)
-                    if ((X[i] & Q) != 0)
-                        X[0] ^= P; // invert
-                    else
-                    {
-                        t = (X[0] ^ X[i]) & P;
-                        X[0] ^= t;
-                        X[i] ^= t;
-                    }
-            } // exchange
-            // Gray encode
-            for (i = 1; i < n; i++)
-                X[i] ^= X[i - 1];
-            t = 0;
-            for (Q = M; Q > 1; Q >>= 1)
-                if ((X[n - 1] & Q) != 0)
-                    t ^= Q - 1;
-            for (i = 0; i < n; i++)
-                X[i] ^= t;
-
-            //convert to int and return
-            string resStr = string.Join("", X);
-            long ret = Convert.ToInt64(resStr, 2);
-            return ret;
-        }
 
         //This might be a little more than graycode??
         public void GreyCode(string value)
@@ -383,41 +318,6 @@ namespace OrderColors
                 original[i] ^= 1;
             }
             return original;
-        }
-
-        //Retrieve distance along the Hilbert Curve
-        //Convert (x, y, z!) to d
-        public void hilbertC(int s, int x, int y, int z, int dx, int dy, int dz, int dx2, int dy2, int dz2, int dx3, int dy3, int dz3)
-        {
-            if (s == 1)
-            {
-                //red[m] = x;
-                //green[m] = y;
-                //blue[m] = z;
-                hval++;
-            }
-            else
-            {
-                s /= 2;
-                if (dx < 0) x -= s * dx;
-                if (dy < 0) y -= s * dy;
-                if (dz < 0) z -= s * dz;
-                if (dx2 < 0) x -= s * dx2;
-                if (dy2 < 0) y -= s * dy2;
-                if (dz2 < 0) z -= s * dz2;
-                if (dx3 < 0) x -= s * dx3;
-                if (dy3 < 0) y -= s * dy3;
-                if (dz3 < 0) z -= s * dz3;
-                hilbertC(s, x, y, z, dx2, dy2, dz2, dx3, dy3, dz3, dx, dy, dz);
-                hilbertC(s, x + s * dx, y + s * dy, z + s * dz, dx3, dy3, dz3, dx, dy, dz, dx2, dy2, dz2);
-                hilbertC(s, x + s * dx + s * dx2, y + s * dy + s * dy2, z + s * dz + s * dz2, dx3, dy3, dz3, dx, dy, dz, dx2, dy2, dz2);
-                hilbertC(s, x + s * dx2, y + s * dy2, z + s * dz2, -dx, -dy, -dz, -dx2, -dy2, -dz2, dx3, dy3, dz3);
-                hilbertC(s, x + s * dx2 + s * dx3, y + s * dy2 + s * dy3, z + s * dz2 + s * dz3, -dx, -dy, -dz, -dx2, -dy2, -dz2, dx3, dy3, dz3);
-                hilbertC(s, x + s * dx + s * dx2 + s * dx3, y + s * dy + s * dy2 + s * dy3, z + s * dz + s * dz2 + s * dz3, -dx3, -dy3, -dz3, dx, dy, dz, -dx2, -dy2, -dz2);
-                hilbertC(s, x + s * dx + s * dx3, y + s * dy + s * dy3, z + s * dz + s * dz3, -dx3, -dy3, -dz3, dx, dy, dz, -dx2, -dy2, -dz2);
-                hilbertC(s, x + s * dx3, y + s * dy3, z + s * dz3, dx2, dy2, dz2, -dx3, -dy3, -dz3, -dx, -dy, -dz);
-            }
-             hval=0;
         }
 
         public int fromBool(bool boolval)
