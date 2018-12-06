@@ -253,14 +253,29 @@ namespace WindowsFormsApp1
             ViewColorList(myColors);
         }
 
-        private void SelHilbert_CheckedChanged(object sender, EventArgs e)
+
+        private void SelGrey_CheckedChanged(object sender, EventArgs e)
         {
             //create a new graph to run Zorder on
             Graph graph = new Graph(co.getColors());
 
             //depending on hsv or rgb being selected pass the appropraite string
             //so that the algorithm can run on those values
-            graph.hOrdering();
+            graph.hOrdering("greycode");
+
+            //Get the sorted colorlist from graph
+            List <Color> myColors = graph.colorlist;
+            ViewColorList(myColors);
+        }
+
+        private void selHilbert_CheckedChanged_1(object sender, EventArgs e)
+        {
+            //create a new graph to run Zorder on
+            Graph graph = new Graph(co.getColors());
+
+            //depending on hsv or rgb being selected pass the appropraite string
+            //so that the algorithm can run on those values
+            graph.hOrdering("hilbert");
 
             //Get the sorted colorlist from graph
             List<Color> myColors = graph.colorlist;

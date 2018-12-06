@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace OrderColors
 {
@@ -16,7 +15,7 @@ namespace OrderColors
         public long hval;
         //public int hval;
 
-        public Point(double x, double y, double z, double distance, Color color, bool zorder, bool horder)
+        public Point(double x, double y, double z, double distance, Color color, bool zorder, bool horder, string hilbert)
         {
             this.x = x;
             this.y = y;
@@ -33,7 +32,7 @@ namespace OrderColors
                 //hilbertC(256, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1);
                 //These appear to do the same thing
                 //getHValue();
-                //GreyCode();
+                GreyCode(hilbert);
             }
         }
 
@@ -178,7 +177,7 @@ namespace OrderColors
         }
 
         //This might be a little more than graycode??
-        public void GreyCode()
+        public void GreyCode(string value)
         {
             //convert the integers in the point to a binary representation of them
             string bx = Convert.ToString(Convert.ToInt32(x), 2).PadLeft(16, '0');
@@ -200,16 +199,167 @@ namespace OrderColors
 
             //Using rank, combine the arrays and flip every rankth bit
             int[] combined = (bxArr.Concat(byArr).ToArray()).Concat(bzArr).ToArray();
-            int[] bitArr = FlipBits(rank, combined);
+            int[] bitArr = XorBits(rank, combined);
 
-            //rotations and stuff
+            if (value != "greycode")
+            {
+                //Test print the long bit number
+                string totalArr = "";
+                for (int i = 0; i < bitArr.Count(); i++)
+                {
+                    totalArr += bitArr[i];
+                }
+                Console.WriteLine("bitArr : " + totalArr);
+
+                //rotations and stuff
+                int[] finArr = getHilbertNum(bitArr, rank);
+
+                //delaminate it
+                //create empty matrix to start process
+                List<int[]> matrix = new List<int[]>();
+                //copy into the matrix
+                for (int k = 0; k < finArr.Length - rank; k++)
+                {
+                    int[] section = SubArray(bitArr, k, k + rank);
+                    matrix.Add(section);
+                }
+                //reversal
+                for (int k = 0; k < matrix.Count/2; k++)
+                {
+                    int[] first = matrix[k];
+                    int[] last = matrix[matrix.Count - 1 - k];
+
+                    matrix[k] = first;
+                    matrix[matrix.Count - 1 - k] = last;
+                }
+                //transpose it
+                List<int[]> transposed = new List<int[]>();
+                for (int i = 0; i < matrix[0].Length-1; i++)
+                {
+                    int[] temp = new int[matrix.Count];
+                    for (int j = 0; j < matrix.Count-1; j++)
+                    {
+                        temp[j] = matrix[j][i];
+                    }
+                }
+                //combine the arrays once more and flip every rankth bit to
+                //grey decode it
+                int[] decoded = new int[finArr.Length];
+                for (int g = 0; g < transposed.Count; g++)
+                {
+                    decoded = decoded.Concat(transposed[g]).ToArray();
+                }
+                bitArr = decoded;
+            }
 
             //finally, convert to integer and store
             string resStr = string.Join("", bitArr);
             long ret = Convert.ToInt64(resStr, 2);
 
-            //hval = ret;
+            hval = ret;
+        }
 
+        public int[] SubArray(int[] data, int startindex, int endindex)
+        {
+            int length = endindex - startindex;
+            int[] result = new int[length];
+            Array.Copy(data, startindex, result, 0, length);
+            return result;
+        }
+
+        public int[] getHilbertNum(int[] bitArr, int rank)
+        {
+            List<int> lst = new List<int>();
+
+            int[] prevchnk = { 0, 0, 0, 0 };
+
+            //For every chunk in the bit array
+            for (int i = 0; i < bitArr.Count() - rank; i += rank)
+            {
+
+                //Take the chunk out of the bit array
+                int[] chnk = SubArray(bitArr, i, i + rank);
+
+                //rotation = the first index of 1 in number
+                int rotation = 0;
+                string testchnk = "";
+                for (int j = prevchnk.Length - 1; j >= 0; j--)
+                {
+                    testchnk += prevchnk[j];
+                    if (prevchnk[j] == 1)
+                    {
+                        rotation = j + 2;
+                    }
+                }
+                //if the rotation is greater than rank, set it back
+                if (rotation >= rank)
+                {
+                    rotation = rotation - rank;
+                }
+
+
+                //test the size of chnk
+                string testchunk = "";
+                for (int x = 0; x < chnk.Length; x++)
+                {
+                    testchunk += chnk[x];
+                }
+                Console.WriteLine("testchunk: " + testchunk);
+
+                //create the flipbit
+                int[] flipbit = { 0, 0, 0, 0 };
+                Console.WriteLine("Rotation : " + rotation);
+                flipbit[rotation] = 1;
+                int[] rotated = Rotations(chnk, flipbit, 1);
+
+                //Append the rotated bits to the list
+                string test = "";
+                for (int k = 0; k < rotated.Length; k++)
+                {
+                    lst.Add(rotated[k]);
+                    test += rotated[k];
+                }
+                Console.WriteLine("returned : " + test);
+
+                prevchnk = chnk;
+            }
+
+            //convert the list to an array and return
+            int[] ret = lst.ToArray();
+            return ret;
+        }
+
+        public int[] Rotations(int[] chnk, int[] flipbit, int rotation)
+        {
+
+            //shift every bit value to the left for the value of rotation
+            Queue rotchunk = new Queue(chnk);
+            //print array chnk to check
+            for (int i = 0; i < rotation; i++)
+            {
+                rotchunk.Enqueue(rotchunk.Dequeue());
+            }
+            int[] rotchnkArr = new int[chnk.Length];
+
+            int rotCount = rotchunk.Count;
+            for (int j = 0; j < rotCount; j++)
+            {
+                rotchnkArr[j] = Convert.ToInt32(rotchunk.Dequeue());
+            }
+
+            //xor the chnk and flipbit together and append to the list
+            int[] toAppend = chnkXflipbit(rotchnkArr, flipbit);
+            return toAppend;
+        }
+
+        public int[] chnkXflipbit(int[] chnk, int[] flipbit)
+        {
+            int[] ret = new int[chnk.Length];
+            for (int i = 0; i < chnk.Length-1; i++)
+            {
+                ret[i] = chnk[i] ^ flipbit[i];
+            }
+            return ret;
         }
 
         public int[] XorArray(int[] original)
@@ -226,7 +376,7 @@ namespace OrderColors
             return newbits;
         }
 
-        public int[] FlipBits(int rank, int[] original)
+        public int[] XorBits(int rank, int[] original)
         {
             for (int i = 0; i < original.Length; i += rank)
             {

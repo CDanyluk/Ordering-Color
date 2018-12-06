@@ -30,8 +30,9 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.selHilbert = new System.Windows.Forms.RadioButton();
             this.SelPeano = new System.Windows.Forms.RadioButton();
-            this.SelHilbert = new System.Windows.Forms.RadioButton();
+            this.SelGray = new System.Windows.Forms.RadioButton();
             this.selZOrder = new System.Windows.Forms.RadioButton();
             this.SelNeighbor = new System.Windows.Forms.RadioButton();
             this.SelLum = new System.Windows.Forms.RadioButton();
@@ -74,8 +75,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.selHilbert);
             this.groupBox1.Controls.Add(this.SelPeano);
-            this.groupBox1.Controls.Add(this.SelHilbert);
+            this.groupBox1.Controls.Add(this.SelGray);
             this.groupBox1.Controls.Add(this.selZOrder);
             this.groupBox1.Controls.Add(this.SelNeighbor);
             this.groupBox1.Controls.Add(this.SelLum);
@@ -89,10 +91,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Order By:";
             // 
+            // selHilbert
+            // 
+            this.selHilbert.AutoSize = true;
+            this.selHilbert.Location = new System.Drawing.Point(27, 306);
+            this.selHilbert.Name = "selHilbert";
+            this.selHilbert.Size = new System.Drawing.Size(303, 36);
+            this.selHilbert.TabIndex = 7;
+            this.selHilbert.TabStop = true;
+            this.selHilbert.Text = "Hilbert Curve (RGB)";
+            this.selHilbert.UseVisualStyleBackColor = true;
+            this.selHilbert.CheckedChanged += new System.EventHandler(this.selHilbert_CheckedChanged_1);
+            // 
             // SelPeano
             // 
             this.SelPeano.AutoSize = true;
-            this.SelPeano.Location = new System.Drawing.Point(27, 266);
+            this.SelPeano.Location = new System.Drawing.Point(27, 222);
             this.SelPeano.Name = "SelPeano";
             this.SelPeano.Size = new System.Drawing.Size(303, 36);
             this.SelPeano.TabIndex = 6;
@@ -100,17 +114,17 @@
             this.SelPeano.Text = "Peano Curve (RGB)";
             this.SelPeano.UseVisualStyleBackColor = true;
             // 
-            // SelHilbert
+            // SelGray
             // 
-            this.SelHilbert.AutoSize = true;
-            this.SelHilbert.Location = new System.Drawing.Point(27, 223);
-            this.SelHilbert.Name = "SelHilbert";
-            this.SelHilbert.Size = new System.Drawing.Size(303, 36);
-            this.SelHilbert.TabIndex = 5;
-            this.SelHilbert.TabStop = true;
-            this.SelHilbert.Text = "Hilbert Curve (RGB)";
-            this.SelHilbert.UseVisualStyleBackColor = true;
-            this.SelHilbert.CheckedChanged += new System.EventHandler(this.SelHilbert_CheckedChanged);
+            this.SelGray.AutoSize = true;
+            this.SelGray.Location = new System.Drawing.Point(27, 264);
+            this.SelGray.Name = "SelGray";
+            this.SelGray.Size = new System.Drawing.Size(274, 36);
+            this.SelGray.TabIndex = 5;
+            this.SelGray.TabStop = true;
+            this.SelGray.Text = "Gray Code (RGB)";
+            this.SelGray.UseVisualStyleBackColor = true;
+            this.SelGray.CheckedChanged += new System.EventHandler(this.SelGrey_CheckedChanged);
             // 
             // selZOrder
             // 
@@ -292,8 +306,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton selZOrder;
-        private System.Windows.Forms.RadioButton SelHilbert;
+        private System.Windows.Forms.RadioButton SelGray;
         private System.Windows.Forms.RadioButton SelPeano;
+        private System.Windows.Forms.RadioButton selHilbert;
     }
 }
 

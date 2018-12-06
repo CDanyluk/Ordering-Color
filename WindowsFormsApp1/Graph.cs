@@ -40,7 +40,7 @@ namespace OrderColors
         }
 
         //hilbert curve implementation
-        public void hOrdering()
+        public void hOrdering(string hilbert)
         {
             //Create a list of all the points based off of the colors in colorlist
             List<Point> pointlist = new List<Point>();
@@ -50,7 +50,7 @@ namespace OrderColors
                 double y = colorlist[i].G;
                 double z = colorlist[i].B;
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], false, true);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], false, true, hilbert);
                 pointlist.Add(tempPoint);
                 Console.WriteLine("reg poin = " + x + "," + y + "," + z);
                 Console.WriteLine("tempPoint = " + tempPoint.x + "," + tempPoint.y + "," + tempPoint.z);
@@ -144,7 +144,7 @@ namespace OrderColors
                 double y = colorlist[i].G;
                 double z = colorlist[i].B;
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder, false);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder, false, "none");
                 pointlist.Add(tempPoint);
             }
             return pointlist;
@@ -159,7 +159,7 @@ namespace OrderColors
                 double y = colorlist[i].GetSaturation();
                 double z = colorlist[i].GetBrightness();
                 //Console.WriteLine(x + "," + y + "," + z);
-                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder, false);
+                Point tempPoint = new Point(x, y, z, Double.MaxValue, colorlist[i], zorder, false, "none");
                 pointlist.Add(tempPoint);
             }
             return pointlist;
