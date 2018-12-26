@@ -21,7 +21,7 @@ Visual Studio IDE that it was written in.
 ## GUI Usage
 After downloading, launch the application in Visual Studio, this will alow you to
 select both the algorithm to run and the color space to use. Doing so will change
-visualization of the color list at the bottom of the application. 
+the visualization of the color list at the bottom of the application. 
 
 ## Author
 Independantly written by Chantal Danyluk, many thanks to my professor Bayazit Karaman
